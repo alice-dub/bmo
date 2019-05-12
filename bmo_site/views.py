@@ -6,8 +6,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def get_pdfs(query):
     with connection.cursor() as cursor:
        cursor.execute("""SELECT url FROM search_index
-                      WHERE document @@ to_tsquery('fr', %s)
-                      ORDER BY ts_rank(document, to_tsquery('fr', %s))""",
+                      WHERE document @@ phraseto_tsquery('fr', %s)
+                      ORDER BY ts_rank(document, phraseto_tsquery('fr', %s))
+                      DESC""",
                       [query, query])
        rows = cursor.fetchall()
 
@@ -19,10 +20,10 @@ def search(request):
     if request.method == 'GET':
         query= request.GET.get('q')
 
-        submitbutton= request.GET.get('submit')
-
         if query is not None:
             results = get_pdfs(query)
+
+            context={'results': results}
             paginator = Paginator(results, 15)
             page = request.GET.get('page', 1)
             try:
@@ -34,6 +35,5 @@ def search(request):
             # If page is out of range (e.g. 9999), deliver last page of results.
                 results = paginator.page(paginator.num_pages)
             context={'results': results,
-                     'submitbutton': submitbutton,
                      'query':query}
     return HttpResponse(template.render(context, request))

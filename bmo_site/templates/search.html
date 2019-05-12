@@ -7,7 +7,7 @@
 </form>
 
 
-{% if submitbutton == 'Search' and request.GET.q != '' %}
+{% if request.GET.q != '' %}
 {% if results %}
 <h3>Resultats pour : <b>{{ request.GET.q }}</b></h3>
 <br/><br/>
