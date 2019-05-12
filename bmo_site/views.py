@@ -1,5 +1,16 @@
 from django.http import HttpResponse
 from django.template import loader
+from django.db import connection
+
+def get_pdfs(query):
+    with connection.cursor() as cursor:
+       cursor.execute("""SELECT url FROM search_index
+                      WHERE document @@ to_tsquery('fr', %s)
+                      ORDER BY ts_rank(document, to_tsquery('fr', %s))""",
+                      [query, query])
+       rows = cursor.fetchall()
+
+    return [r[0] for r in rows]
 
 def search(request):
     template = loader.get_template('search.html')
@@ -10,10 +21,8 @@ def search(request):
         submitbutton= request.GET.get('submit')
 
         if query is not None:
-            #lookups= Q(title__icontains=query) | Q(content__icontains=query)
-
-            results= ["Resultat1", "Resultat2"]
+            results = get_pdfs(query)
 
             context={'results': results,
                      'submitbutton': submitbutton}
-        return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(context, request))
