@@ -15,7 +15,7 @@
 
 {% for result in results %}
 
-{{result}}
+<a href={{result}}>{{result}}</a>
 <br/><br/>
 
 {% endfor %}
@@ -23,3 +23,19 @@
 No search results for this query
 {% endif %}
 {% endif %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if results.has_previous %}
+            <a href="?q={{query}}&submit={{submitbutton}}&page={{ results.previous_page_number}}">précédent</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ results.number }} of {{ results.paginator.num_pages }}.
+        </span>
+
+        {% if results.has_next %}
+            <a href="?q={{query}}&submit={{submitbutton}}&page={{ results.next_page_number}}">suivant</a>
+        {% endif %}
+    </span>
+</div>
