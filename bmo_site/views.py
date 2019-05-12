@@ -19,11 +19,8 @@ def search(request):
     if request.method == 'GET':
         query= request.GET.get('q')
 
-        submitbutton= request.GET.get('submit')
-
         if query is not None:
             results = get_pdfs(query)
 
-            context={'results': results,
-                     'submitbutton': submitbutton}
+            context={'results': results}
     return HttpResponse(template.render(context, request))
