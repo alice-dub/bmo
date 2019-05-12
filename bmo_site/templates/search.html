@@ -27,7 +27,7 @@ Pas de résultat pour : {{ request.GET.q }}
 <div class="pagination">
     <span class="step-links">
         {% if results.has_previous %}
-            <a href="?q={{query}}&submit={{submitbutton}}&page={{ results.previous_page_number}}">Précédent</a>
+            <a href="?q={{query}}&page={{ results.previous_page_number}}">Précédent</a>
         {% endif %}
 
         <span class="current">
@@ -35,7 +35,7 @@ Pas de résultat pour : {{ request.GET.q }}
         </span>
 
         {% if results.has_next %}
-            <a href="?q={{query}}&submit={{submitbutton}}&page={{ results.next_page_number}}">Suivant</a>
+            <a href="?q={{query}}&page={{ results.next_page_number}}">Suivant</a>
         {% endif %}
     </span>
 </div>
