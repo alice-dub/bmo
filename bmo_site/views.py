@@ -5,8 +5,9 @@ from django.db import connection
 def get_pdfs(query):
     with connection.cursor() as cursor:
        cursor.execute("""SELECT url FROM search_index
-                      WHERE document @@ to_tsquery('fr', %s)
-                      ORDER BY ts_rank(document, to_tsquery('fr', %s))""",
+                      WHERE document @@ phraseto_tsquery('fr', %s)
+                      ORDER BY ts_rank(document, phraseto_tsquery('fr', %s))
+                      DESC""",
                       [query, query])
        rows = cursor.fetchall()
 
