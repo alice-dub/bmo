@@ -1,6 +1,25 @@
 <h1>Recherche dans les Bulletins Municipaux Officiels de la ville de Paris </h1>
 <p>Entrez les mots clefs correspondant à votre recherche</p>
 
+<form  method="GET" value="{{request.GET.q}}">
+<input type="text" name="q" size="70" placeholder="Pistes cyclables, Alésia… "  value="{{request.GET.q}}">
+<input type="submit" name="submit" value="Search"/>
+</form>
 
-<input type="text" size="70" placeholder="Pistes cyclables, Alésia… ">
-<button type="button">Recherche</button>
+
+{% if submitbutton == 'Search' and request.GET.q != '' %}
+{% if results %}
+<h3>Resultats pour : <b>{{ request.GET.q }}</b></h3>
+<br/><br/>
+
+
+{% for result in results %}
+
+{{result}}
+<br/><br/>
+
+{% endfor %}
+{% else %}
+No search results for this query
+{% endif %}
+{% endif %}
