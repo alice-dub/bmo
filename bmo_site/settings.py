@@ -25,7 +25,9 @@ SECRET_KEY = 'erluz#6-e0mtt&yuwhz9snsje8h1r225y)_=oo@$^le-f6$rgn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'bmo.succo.fr',
+]
 
 
 # Application definition
