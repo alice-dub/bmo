@@ -7,8 +7,9 @@
 </form>
 
 
-{% if request.GET.q != '' %}
+{% if request.GET.q %}
 {% if results %}
+
 <h3>Resultats pour : <b>{{ request.GET.q }}</b></h3>
 <br/><br/>
 
@@ -21,7 +22,7 @@
 {% endfor %}
 {% else %}
 Pas de résultat pour : {{ request.GET.q }} 
-{% endif %}
+
 {% endif %}
 
 <div class="pagination">
@@ -39,3 +40,7 @@ Pas de résultat pour : {{ request.GET.q }}
         {% endif %}
     </span>
 </div>
+
+
+
+{% endif %}
