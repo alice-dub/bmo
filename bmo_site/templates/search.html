@@ -20,12 +20,16 @@
 <br/><br/>
 
 
+<ul>
 {% for result in results %}
 
-<a href={{result}}>{{result}}</a>
-<br/><br/>
+<li>
+    <a href={{result}}>{{result}}</a>
+    <br/><br/>
+</li>
 
 {% endfor %}
+</ul>
 {% else %}
 Pas de résultat pour : {{ request.GET.q }} 
 
