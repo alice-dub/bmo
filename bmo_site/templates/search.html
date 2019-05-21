@@ -17,15 +17,17 @@
 {% if results %}
 
 <h3>Resultats pour : <b>{{ request.GET.q }}</b></h3>
-<br/><br/>
 
 
+<ul>
 {% for result in results %}
 
-<a href={{result}}>{{result}}</a>
-<br/><br/>
+<li>
+    <a href={{result}}>{{result}}</a>
+</li>
 
 {% endfor %}
+</ul>
 {% else %}
 Pas de résultat pour : {{ request.GET.q }} 
 
