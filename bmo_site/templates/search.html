@@ -17,7 +17,6 @@
 {% if results %}
 
 <h3>Resultats pour : <b>{{ request.GET.q }}</b></h3>
-<br/><br/>
 
 
 <ul>
@@ -25,7 +24,6 @@
 
 <li>
     <a href={{result}}>{{result}}</a>
-    <br/><br/>
 </li>
 
 {% endfor %}
