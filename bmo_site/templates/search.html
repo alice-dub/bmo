@@ -42,12 +42,13 @@
 {% endfor %}
 </ul>
 {% else %}
+
 Pas de résultat pour : {{ request.GET.q }} 
 
 {% endif %}
 
 <div class="pagination">
-<span class="step-links">
+<p class="step-links">
 {% if results.has_previous %}
 <a href="?q={{query}}&sort={{sort}}&page={{ results.previous_page_number}}">Précédent</a>
 {% endif %}
@@ -59,9 +60,10 @@ Page {{ results.number }} sur {{ results.paginator.num_pages }}.
 {% if results.has_next %}
 <a href="?q={{query}}&sort={{sort}}&page={{ results.next_page_number}}">Suivant</a>
 {% endif %}
-</span>
+</p>
 </div>
 {% endif %}
-<p style="color:gray;margin-top:5*px;"> Ce projet est réalisé à partir du <a href="https://www.paris.fr/bmo"> site officiel de la ville de Paris</a>. Vous pouvez <a href="https://github.com/alice-dub/bmo/">nous contacter</a> ou <a href="https://github.com/alice-dub/bmo/"> y contribuer </a></p>
+<p style="color:gray;margin-top:30px;"> Ce projet est réalisé à partir du <a href="https://www.paris.fr/bmo"> site officiel de la ville de Paris</a>. 
+    Des idées ? Vous pouvez <a href="https://github.com/alice-dub/bmo/">nous contacter</a> ou <a href="https://github.com/alice-dub/bmo/"> y contribuer </a></p>
 </div>
 
