@@ -16,15 +16,20 @@
 {% if request.GET.q %}
 {% if results %}
 
-<h3>Resultats pour : <b>{{ request.GET.q }}</b></h3>
+{% load i18n %}
+
+
+<h3>Résultats pour : <b>{{ request.GET.q }}</b></h3>
 
 
 <ul>
 {% for result in results %}
 
+{% language 'fr' %}
 <li>
-    <a href={{result.0}}> Bulletin Municipal Officiel du {{result.1}}</a>
+    <a href={{result.0}}> Bulletin Municipal Officiel du {{result.1 |date:" d F Y" }}</a>
 </li>
+{% endlanguage %}
 
 {% endfor %}
 </ul>
