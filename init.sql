@@ -22,8 +22,6 @@ ALTER TEXT SEARCH CONFIGURATION fr ALTER MAPPING FOR hword, hword_part, word WIT
 -- the view
 CREATE MATERIALIZED VIEW search_index AS 
 SELECT id,
-       url,
-       bmo_date,
        to_tsvector('fr', content) as document
 FROM list_pdf;
 CREATE INDEX idx_fts_search ON search_index USING gin(document);
