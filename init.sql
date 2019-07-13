@@ -2,7 +2,8 @@
 CREATE table list_pdf (
         id SERIAL PRIMARY KEY,
         url text,
-        content text
+        content text,
+        pub_date date
 );
 
 -- user for the service/script
