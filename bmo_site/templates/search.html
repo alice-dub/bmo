@@ -49,7 +49,7 @@ Pas de résultat pour : {{ request.GET.q }}
 <div class="pagination">
 <span class="step-links">
 {% if results.has_previous %}
-<a href="?q={{query}}&page={{ results.previous_page_number}}">Précédent</a>
+<a href="?q={{query}}&sort={{sort}}&page={{ results.previous_page_number}}">Précédent</a>
 {% endif %}
 
 <span class="current">
@@ -57,9 +57,11 @@ Page {{ results.number }} sur {{ results.paginator.num_pages }}.
 </span>
 
 {% if results.has_next %}
-<a href="?q={{query}}&page={{ results.next_page_number}}">Suivant</a>
+<a href="?q={{query}}&sort={{sort}}&page={{ results.next_page_number}}">Suivant</a>
 {% endif %}
 </span>
 </div>
 {% endif %}
+<p style="color:gray;margin-top:5*px;"> Ce projet est réalisé à partir du <a href="https://www.paris.fr/bmo"> site officiel de la ville de Paris</a>. Vous pouvez <a href="https://github.com/alice-dub/bmo/">nous contacter</a> ou <a href="https://github.com/alice-dub/bmo/"> y contribuer </a></p>
 </div>
+

@@ -27,14 +27,14 @@ def get_pdfs_date(query):
 def search(request):
     template = loader.get_template('search.html')
     context={}
-    tri = request.GET.get('sort')
+    sort = request.GET.get('sort')
     if request.method == 'GET':
         query= request.GET.get('q')
-        tri= request.GET.get('sort')
+        sort= request.GET.get('sort')
         if query is not None:
-            if tri == 'date':
+            if sort == 'date':
                 results = get_pdfs_date(query)
-            elif tri == 'perti':
+            elif sort == 'perti':
                 results = get_pdfs_rank(query)
             paginator = Paginator(results, 15)
             page = request.GET.get('page', 1)
@@ -47,7 +47,6 @@ def search(request):
             # If page is out of range (e.g. 9999), deliver last page of results.
                 results = paginator.page(paginator.num_pages)
             context={'results': results,
-                     'state' :tri,
+                     'sort': sort,
                      'query':query}
-            state = tri
     return HttpResponse(template.render(context, request))
