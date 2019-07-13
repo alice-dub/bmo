@@ -27,10 +27,11 @@ def get_pdfs_date(query):
 def search(request):
     template = loader.get_template('search.html')
     context={}
-    sort = request.GET.get('sort')
     if request.method == 'GET':
         query= request.GET.get('q')
         sort= request.GET.get('sort')
+        if sort not in ['perti', 'date']:
+            sort = 'perti'
         if query is not None:
             if sort == 'date':
                 results = get_pdfs_date(query)
