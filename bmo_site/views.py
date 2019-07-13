@@ -7,8 +7,8 @@ def get_pdfs_rank(query):
     with connection.cursor() as cursor:
        cursor.execute("""SELECT url, pub_date FROM search_index
                       JOIN list_pdf using(id)
-                      WHERE document @@ phraseto_tsquery('fr', %s)
-                      ORDER BY ts_rank(document, phraseto_tsquery('fr', %s))
+                      WHERE document @@ plainto_tsquery('fr', %s)
+                      ORDER BY ts_rank(document, plainto_tsquery('fr', %s))
                       DESC""",
                       [query, query])
        rows = cursor.fetchall()
@@ -18,7 +18,7 @@ def get_pdfs_date(query):
     with connection.cursor() as cursor:
        cursor.execute("""SELECT url, pub_date FROM search_index
                       JOIN list_pdf using(id)
-                      WHERE document @@ phraseto_tsquery('fr', %s)
+                      WHERE document @@ plainto_tsquery('fr', %s)
                       ORDER BY pub_date DESC""",
                       [query])
        rows = cursor.fetchall()
