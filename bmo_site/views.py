@@ -3,7 +3,7 @@ from django.template import loader
 from django.db import connection
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-def get_pdfs(query):
+def get_pdfs_rank(query):
     with connection.cursor() as cursor:
        cursor.execute("""SELECT url, pub_date FROM search_index
                       JOIN list_pdf using(id)
@@ -12,21 +12,30 @@ def get_pdfs(query):
                       DESC""",
                       [query, query])
        rows = cursor.fetchall()
-    for row in rows:
-        print(row[0])
-        print(row[1])
-        print(type(row[1]))
+    return [[r[0], r[1]] for r in rows]
+
+def get_pdfs_date(query):
+    with connection.cursor() as cursor:
+       cursor.execute("""SELECT url, pub_date FROM search_index
+                      JOIN list_pdf using(id)
+                      WHERE document @@ phraseto_tsquery('fr', %s)
+                      ORDER BY pub_date DESC""",
+                      [query])
+       rows = cursor.fetchall()
     return [[r[0], r[1]] for r in rows]
 
 def search(request):
     template = loader.get_template('search.html')
     context={}
+    tri = request.GET.get('sort')
     if request.method == 'GET':
         query= request.GET.get('q')
-
+        tri= request.GET.get('sort')
         if query is not None:
-            results = get_pdfs(query)
-
+            if tri == 'date':
+                results = get_pdfs_date(query)
+            elif tri == 'perti':
+                results = get_pdfs_rank(query)
             paginator = Paginator(results, 15)
             page = request.GET.get('page', 1)
             try:
@@ -38,6 +47,7 @@ def search(request):
             # If page is out of range (e.g. 9999), deliver last page of results.
                 results = paginator.page(paginator.num_pages)
             context={'results': results,
+                     'state' :tri,
                      'query':query}
-            print(context)
+            state = tri
     return HttpResponse(template.render(context, request))
