@@ -58,8 +58,11 @@ for bmo_year in bmo_paragraph:
                             handle.write(chunk)
 
                 proc = subprocess.Popen(["pdftotext", "/tmp/bmo.pdf", "-"],
-                                        stdout=subprocess.PIPE)
+                                        stdout=subprocess.PIPE,
+                                        stderr=None,
+                                        universal_newlines=True)
                 out = proc.communicate()[0]
+                proc.wait()
                 curr.execute("""
                     INSERT INTO list_pdf (url, content, pub_date)
                     VALUES (%s, %s, %s)""", (url, out, date))
