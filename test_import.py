@@ -57,9 +57,10 @@ for bmo_year in bmo_paragraph:
                         if chunk:  # filter out keep-alive new chunks
                             handle.write(chunk)
 
-                proc = subprocess.run(["pdftotext", "/tmp/bmo.pdf", "-"],
-                                      capture_output=True)
+                proc = subprocess.Popen(["pdftotext", "/tmp/bmo.pdf", "-"],
+                                        stdout=subprocess.PIPE)
+                out = proc.communicate()[0]
                 curr.execute("""
                     INSERT INTO list_pdf (url, content, pub_date)
-                    VALUES (%s, %s, %s)""", (url, proc.stdout, date))
+                    VALUES (%s, %s, %s)""", (url, out, date))
                 conn.commit()
