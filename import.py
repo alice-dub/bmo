@@ -45,7 +45,6 @@ for bmo_year in bmo_paragraph:
                                          traduction_mois[extract_date[1]],
                                          date_to_day(extract_date[0]))
                 url = bmo['href']
-                print(url, date)
                 curr = conn.cursor()
                 curr.execute("select id from list_pdf where url = %s",
                              (url,))
