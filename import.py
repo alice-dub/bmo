@@ -66,3 +66,6 @@ for bmo_year in bmo_paragraph:
                     INSERT INTO list_pdf (url, content, pub_date)
                     VALUES (%s, %s, %s)""", (url, out, date))
                 conn.commit()
+curr = conn.cursor()
+curr.execute("REFRESH MATERIALIZED VIEW search_index")
+conn.commit()
