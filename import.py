@@ -32,7 +32,7 @@ def date_to_day(day):
 
 
 res = requests.get("https://www.paris.fr/bmo")
-soup = BeautifulSoup.BeautifulSoup(res.text)
+soup = BeautifulSoup.BeautifulSoup(res.text, features="html.parser")
 bmo_paragraph = soup.findAll('div', {'class': 'accordion-content-wrapper'})
 for bmo_year in bmo_paragraph:
     bmo_list = bmo_year.findAll('a')
