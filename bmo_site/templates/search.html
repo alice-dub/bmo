@@ -22,47 +22,49 @@
 </form>
 
 
-{% if request.GET.q %}
 {% if results %}
+	{% if request.GET.q %}
+		<h3>Résultats pour : <b>{{ request.GET.q }}</b></h3> 
+	{% else %}
+		<h3>Derniers bulletins</h3> 
+	{% endif %}
 
-{% load i18n %}
-
-
-<h3>Résultats pour : <b>{{ request.GET.q }}</b></h3> 
-
-<ul>
-{% for result in results %}
-
-{% language 'fr' %}
-<li>
-<a href={{result.0}}> Bulletin Municipal Officiel du {{result.1 |date:" d F Y" }}</a>
-</li>
-{% endlanguage %}
-
-{% endfor %}
-</ul>
+	{% load i18n %}
+	<ul>
+		{% for result in results %}
+		
+			{% language 'fr' %}
+				<li>
+					<a href={{result.0}}> Bulletin Municipal Officiel du {{result.1 |date:" d F Y" }}</a>
+				</li>
+			{% endlanguage %}
+		
+		{% endfor %}
+	</ul>
 {% else %}
-
-Pas de résultat pour : {{ request.GET.q }} 
-
+	{% if request.GET.q %}
+		Pas de résultat pour : {{ request.GET.q }} 
+	{% endif %}
 {% endif %}
 
-<div class="pagination">
-<p class="step-links">
-{% if results.has_previous %}
-<a href="?q={{query}}&sort={{sort}}&page={{ results.previous_page_number}}">Précédent</a>
+{% if results %}
+	<div class="pagination">
+	<p class="step-links">
+	{% if results.has_previous %}
+		<a href="?q={{query}}&sort={{sort}}&page={{ results.previous_page_number}}">Précédent</a>
+	{% endif %}
+	
+	<span class="current">
+	Page {{ results.number }} sur {{ results.paginator.num_pages }}.
+	</span>
+	
+	{% if results.has_next %}
+		<a href="?q={{query}}&sort={{sort}}&page={{ results.next_page_number}}">Suivant</a>
+	{% endif %}
+	</p>
+	</div>
 {% endif %}
 
-<span class="current">
-Page {{ results.number }} sur {{ results.paginator.num_pages }}.
-</span>
-
-{% if results.has_next %}
-<a href="?q={{query}}&sort={{sort}}&page={{ results.next_page_number}}">Suivant</a>
-{% endif %}
-</p>
-</div>
-{% endif %}
 <p style="color:gray;margin-top:30px;"> Ce projet est réalisé à partir du <a href="https://www.paris.fr/bmo"> site officiel de la ville de Paris</a>. 
     Des idées ? Vous pouvez <a href="https://github.com/alice-dub/bmo/">nous contacter</a> ou <a href="https://github.com/alice-dub/bmo/"> y contribuer </a></p>
 </div>
