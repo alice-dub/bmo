@@ -33,13 +33,15 @@ def date_to_day(day):
 
 res = requests.get("https://www.paris.fr/bmo")
 soup = BeautifulSoup.BeautifulSoup(res.text, features="html.parser")
-bmo_paragraph = soup.findAll('div', {'class': 'accordion-content-wrapper'})
+bmo_paragraph = soup.findAll('div', {'class': 'accordion-panel-content'})
 for bmo_year in bmo_paragraph:
     bmo_list = bmo_year.findAll('a')
 
     for bmo in bmo_list:
         if bmo.text:
             extract_date = bmo.text.split()[-3:]
+            if len(extract_date) < 3:
+                continue
             if bool(re.match(r"20\d\d", extract_date[2])):
                 date = '{}-{}-{}'.format(extract_date[2],
                                          traduction_mois[extract_date[1]],
