@@ -31,9 +31,9 @@ def date_to_day(day):
         return day.rjust(2, '0')
 
 
-res = requests.get("https://www.paris.fr/bmo")
+res = requests.get("https://www.paris.fr/pages/publications-administratives-181")
 soup = BeautifulSoup.BeautifulSoup(res.text, features="html.parser")
-bmo_paragraph = soup.findAll('div', {'class': 'accordion-panel-content'})
+bmo_paragraph = soup.findAll('div', {'class': 'accordion-panel'})
 for bmo_year in bmo_paragraph:
     bmo_list = bmo_year.findAll('a')
 
